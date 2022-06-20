@@ -22,6 +22,10 @@ const MainRoutes = {
       element: <Login />
     },
     {
+      path: '/register',
+      element: <Register />
+    },
+    {
       path: '/evaluation',
       element: <Evaluation />
     }
