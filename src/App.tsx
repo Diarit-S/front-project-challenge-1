@@ -11,10 +11,10 @@ function App() {
   return (
     <Router>
       <StyledEngineProvider>
-          <CssBaseline />
-          <div className="App">
-            <Routes />
-          </div>
+        <CssBaseline />
+        <div className="App">
+          <Routes />
+        </div>
       </StyledEngineProvider>
     </Router>
   )
