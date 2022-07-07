@@ -28,7 +28,14 @@ const Login = () => {
     // const myHeaders = new Headers({ Authorization: `Basic ${auth}` })
     // const requestConfig = { headers: myHeaders }
     try {
-      const response = await fetch('www.test.fr', { body: 'body' })
+      const response = await fetch('http://localhost:5050/auth/sendMail', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      })
       console.log(response)
     } catch (error) {
       console.error(error)
@@ -47,7 +54,7 @@ const Login = () => {
 
       <Formik
         initialValues={{
-          email: 'test@test.fr'
+          email: 'pocan69954@runqx.com'
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().max(255).required('Phone number is required')

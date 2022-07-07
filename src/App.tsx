@@ -3,6 +3,10 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 
+import { ToastContainer } from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css'
+
 import Routes from 'routes'
 
 import './App.css'
@@ -14,6 +18,7 @@ function App() {
         <CssBaseline />
         <div className="App">
           <Routes />
+          <ToastContainer />
         </div>
       </StyledEngineProvider>
     </Router>
