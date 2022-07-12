@@ -7,12 +7,12 @@ const Auth = () => {
 
   const login = async (): Promise<void> => {
     try {
-      const response = await fetch('http://localhost:5050/auth/login', {
+      const response = await fetch('http://51.15.208.76:5060/auth/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${searchParams.get('jwt')}`
+          Authorization: `auth-token ${searchParams.get('jwt')}`
         }
       })
       const responseData = await response.json()

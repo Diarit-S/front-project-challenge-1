@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
@@ -7,6 +8,7 @@ import StepContent from '@mui/material/StepContent'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import { TextField } from '@mui/material'
 
 const steps = [
   {
@@ -27,11 +29,20 @@ const steps = [
     label: 'Votre instance',
     description: `Configurez votre instance et accordez l'accès à l'utiliseur identifié par la clé
     publique suivante :`
+  },
+  {
+    label: 'Testez votre connexion',
+    description: ``
   }
 ]
 
 export default function Evaluation() {
   const [activeStep, setActiveStep] = React.useState(0)
+
+  const [lastName, setLastName] = React.useState('')
+  const [firstName, setFirstName] = React.useState('')
+  const [instanceIpAddress, setInstanceIpAddress] = React.useState('')
+  const [instanceUserName, setInstanceUserName] = React.useState('')
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -56,6 +67,51 @@ export default function Evaluation() {
             </StepLabel>
             <StepContent>
               <Typography>{step.description}</Typography>
+
+              {index === 1 && (
+                <Box>
+                  <TextField
+                    id="outlined-basic"
+                    label="Nom"
+                    variant="outlined"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="Prénom"
+                    variant="outlined"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </Box>
+              )}
+
+              {index === 2 && (
+                <Box>
+                  <textarea style={{ resize: 'none' }} readOnly>
+                    Test
+                  </textarea>
+                  <Typography>Précisez les coordonnées d&apos;accès ici</Typography>
+                  <TextField
+                    id="outlined-basic"
+                    label="Adresse IP"
+                    variant="outlined"
+                    onChange={(e) => setInstanceIpAddress(e.target.value)}
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="Utilisateur"
+                    variant="outlined"
+                    onChange={(e) => setInstanceUserName(e.target.value)}
+                  />
+                </Box>
+              )}
+
+              {index === 3 && (
+                <Box>
+                  <Button variant="contained">Testez !</Button>
+                </Box>
+              )}
+
               <Box sx={{ mb: 2 }}>
                 <div>
                   <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>

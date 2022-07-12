@@ -28,7 +28,7 @@ const Login = () => {
     // const myHeaders = new Headers({ Authorization: `Basic ${auth}` })
     // const requestConfig = { headers: myHeaders }
     try {
-      const response = await fetch('http://localhost:5050/auth/sendMail', {
+      const response = await fetch('http://51.15.208.76:5060/auth/sendMail', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -54,10 +54,10 @@ const Login = () => {
 
       <Formik
         initialValues={{
-          email: 'pocan69954@runqx.com'
+          email: ''
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().max(255).required('Phone number is required')
+          email: Yup.string().max(255).required('Email is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
@@ -80,9 +80,9 @@ const Login = () => {
               <OutlinedInput
                 sx={{ color: 'white' }}
                 id="outlined-adornment-phone-login"
-                type="phone"
+                type="email"
                 value={values.email}
-                name="phone"
+                name="email"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 label="Email Address / Username"
