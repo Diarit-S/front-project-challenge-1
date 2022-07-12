@@ -5,6 +5,7 @@ import { AuthContextType } from 'models/Auth'
 export const AuthContext = React.createContext<AuthContextType>(null!)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = React.useState<any>(null)
 
   const signin = (newUser: string, callback: VoidFunction) => {
