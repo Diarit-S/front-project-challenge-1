@@ -26,9 +26,8 @@ const steps = [
     description: 'Merci de renseigner votre nom et prénom'
   },
   {
-    label: 'Votre instance',
-    description: `Configurez votre instance et accordez l'accès à l'utiliseur identifié par la clé
-    publique suivante :`
+    label: 'Votre API',
+    description: `Fournissez le endpoint de votre API`
   },
   {
     label: 'Testez votre connexion',
@@ -41,8 +40,7 @@ export default function Evaluation() {
 
   const [lastName, setLastName] = React.useState('')
   const [firstName, setFirstName] = React.useState('')
-  const [instanceIpAddress, setInstanceIpAddress] = React.useState('')
-  const [instanceUserName, setInstanceUserName] = React.useState('')
+  const [endpoint, setEndpoint] = React.useState('')
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -54,6 +52,24 @@ export default function Evaluation() {
 
   const handleReset = () => {
     setActiveStep(0)
+  }
+
+  const testEndpointConnexion = async () => {
+    try {
+      const response = await fetch('http://51.15.208.76:5050/user/testEndpoint', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'auth-token': ` ${localStorage.get('token')}`
+        },
+        body: { endpoint } as unknown as BodyInit
+      })
+      const responseData = await response.json()
+      console.log(responseData)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -87,28 +103,20 @@ export default function Evaluation() {
 
               {index === 2 && (
                 <Box>
-                  <textarea style={{ resize: 'none' }} readOnly>
-                    Test
-                  </textarea>
-                  <Typography>Précisez les coordonnées d&apos;accès ici</Typography>
                   <TextField
                     id="outlined-basic"
-                    label="Adresse IP"
+                    label="API Endpoint"
                     variant="outlined"
-                    onChange={(e) => setInstanceIpAddress(e.target.value)}
-                  />
-                  <TextField
-                    id="outlined-basic"
-                    label="Utilisateur"
-                    variant="outlined"
-                    onChange={(e) => setInstanceUserName(e.target.value)}
+                    onChange={(e) => setEndpoint(e.target.value)}
                   />
                 </Box>
               )}
 
               {index === 3 && (
                 <Box>
-                  <Button variant="contained">Testez !</Button>
+                  <Button variant="contained" onClick={testEndpointConnexion}>
+                    Testez !
+                  </Button>
                 </Box>
               )}
 

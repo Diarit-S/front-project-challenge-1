@@ -14,7 +14,14 @@ import {
   ListItemText
 } from '@mui/material'
 
-export const ChallengeCard = () => {
+export interface Challenge {
+  name: string
+  id_challenge: string
+  expiration_date: Date
+  id_test: string
+}
+
+export const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   return (
     <Card sx={{ width: '70vw', marginBottom: 2, textAlign: 'left' }}>
       <CardHeader
@@ -28,7 +35,7 @@ export const ChallengeCard = () => {
             </Button>
           </Box>
         }
-        title="Le nom de la challenge"
+        title={challenge.name}
       />
       <CardContent>
         <List>
