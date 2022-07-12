@@ -16,7 +16,7 @@ const Auth = () => {
         }
       })
       const responseData = await response.json()
-      const { token, refreshToken } = responseData
+      const { refreshToken } = responseData
       localStorage.setItem('refreshToken', refreshToken)
       localStorage.setItem('token', searchParams.get('jwt') as string)
       console.log(response)
