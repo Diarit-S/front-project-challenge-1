@@ -18,7 +18,7 @@ const Auth = () => {
       const responseData = await response.json()
       const { token, refreshToken } = responseData
       localStorage.setItem('refreshToken', refreshToken)
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', searchParams.get('jwt') as string)
       console.log(response)
     } catch (error) {
       console.error(error)
