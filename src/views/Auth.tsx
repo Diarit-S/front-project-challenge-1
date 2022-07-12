@@ -12,7 +12,7 @@ const Auth = () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `auth-token ${searchParams.get('jwt')}`
+          'auth-token': ` ${searchParams.get('jwt')}`
         }
       })
       const responseData = await response.json()
