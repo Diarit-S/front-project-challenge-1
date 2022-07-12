@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   Box,
@@ -14,6 +14,7 @@ import {
 // third party
 import * as Yup from 'yup'
 import { Formik } from 'formik'
+// import { useNavigate } from 'react-router-dom'
 
 // assets
 import Alert from '@mui/material/Alert'
@@ -22,6 +23,9 @@ import Alert from '@mui/material/Alert'
 import { getErrorMessage } from 'utils/errors'
 
 const Login = () => {
+  // const navigate = useNavigate()
+  const [isEmailSent, setIsEmailSent] = useState(false)
+
   const login = async (email: string): Promise<void> => {
     // const { email } = credentials
     // const auth = window.btoa(`${email}:${password}`)
@@ -37,6 +41,7 @@ const Login = () => {
         },
         body: JSON.stringify({ email })
       })
+      setIsEmailSent(true)
       console.log(response)
     } catch (error) {
       console.error(error)
@@ -45,84 +50,100 @@ const Login = () => {
 
   return (
     <>
-      <Grid container direction="column" justifyContent="center" spacing={2}>
-        <Grid item xs={12} container alignItems="center" justifyContent="center">
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Sign in with Email address</Typography>
-          </Box>
-        </Grid>
-      </Grid>
-
-      <Formik
-        initialValues={{
-          email: ''
-        }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().max(255).required('Email is required')
-        })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          try {
-            await login(values.email)
-            setStatus({ success: true })
-            setSubmitting(false)
-          } catch (err) {
-            console.error(err)
-            setStatus({ success: false })
-            setErrors({ email: getErrorMessage(err) })
-            setSubmitting(false)
-          }
-        }}>
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-          <form noValidate onSubmit={handleSubmit}>
-            <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
-              <InputLabel htmlFor="outlined-adornment-phone-login" sx={{ color: 'white' }}>
-                Email
-              </InputLabel>
-              <OutlinedInput
-                sx={{ color: 'white' }}
-                id="outlined-adornment-phone-login"
-                type="email"
-                value={values.email}
-                name="email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                label="Email Address / Username"
-                inputProps={{}}
-              />
-              {touched.email && errors.email && (
-                <FormHelperText error id="standard-weight-helper-text-phone-login">
-                  {errors.email}
-                </FormHelperText>
-              )}
-            </FormControl>
-
-            {errors.email && (
-              <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errors.email}</FormHelperText>
+      {!isEmailSent ? (
+        <>
+          <Grid container direction="column" justifyContent="center" spacing={2}>
+            <Grid item xs={12} container alignItems="center" justifyContent="center">
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle1">Sign in with Email address</Typography>
               </Box>
+            </Grid>
+          </Grid>
+
+          <Formik
+            initialValues={{
+              email: ''
+            }}
+            validationSchema={Yup.object().shape({
+              email: Yup.string().max(255).required('Email is required')
+            })}
+            onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+              try {
+                await login(values.email)
+                setStatus({ success: true })
+                setSubmitting(false)
+              } catch (err) {
+                console.error(err)
+                setStatus({ success: false })
+                setErrors({ email: getErrorMessage(err) })
+                setSubmitting(false)
+              }
+            }}>
+            {({
+              errors,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+              touched,
+              values
+            }) => (
+              <form noValidate onSubmit={handleSubmit}>
+                <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
+                  <InputLabel htmlFor="outlined-adornment-phone-login" sx={{ color: 'white' }}>
+                    Email
+                  </InputLabel>
+                  <OutlinedInput
+                    sx={{ color: 'white' }}
+                    id="outlined-adornment-phone-login"
+                    type="email"
+                    value={values.email}
+                    name="email"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    label="Email Address / Username"
+                    inputProps={{}}
+                  />
+                  {touched.email && errors.email && (
+                    <FormHelperText error id="standard-weight-helper-text-phone-login">
+                      {errors.email}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
+                {errors.email && (
+                  <Box sx={{ mt: 3 }}>
+                    <FormHelperText error>{errors.email}</FormHelperText>
+                  </Box>
+                )}
+
+                <Alert severity="info" sx={{ mt: 2, textAlign: 'left' }}>
+                  Consultez votre boite mail pour récupérer votre lien magique ! Le lien sera valide
+                  <br />
+                  pendant une durée de 5 minutes.
+                </Alert>
+
+                <Box sx={{ mt: 2 }}>
+                  <Button
+                    disableElevation
+                    disabled={isSubmitting}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="secondary">
+                    Récupérer mon magik link
+                  </Button>
+                </Box>
+              </form>
             )}
-
-            <Alert severity="info" sx={{ mt: 2, textAlign: 'left' }}>
-              Consultez votre boite mail pour récupérer votre lien magique ! Le lien sera valide
-              <br />
-              pendant une durée de 5 minutes.
-            </Alert>
-
-            <Box sx={{ mt: 2 }}>
-              <Button
-                disableElevation
-                disabled={isSubmitting}
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-                color="secondary">
-                Récupérer mon magik link
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
+          </Formik>
+        </>
+      ) : (
+        <>
+          <Typography>Regardez votre boite mail</Typography>
+        </>
+      )}
     </>
   )
 }
