@@ -28,7 +28,7 @@ const Login = () => {
     // const myHeaders = new Headers({ Authorization: `Basic ${auth}` })
     // const requestConfig = { headers: myHeaders }
     try {
-      const response = await fetch('http://51.15.208.76:5060/auth/sendMail', {
+      const response = await fetch('http://51.15.208.76:5050/auth/sendMail', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

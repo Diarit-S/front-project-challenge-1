@@ -7,7 +7,7 @@ const Auth = () => {
 
   const login = async (): Promise<void> => {
     try {
-      const response = await fetch('http://51.15.208.76:5060/auth/login', {
+      const response = await fetch('http://51.15.208.76:5050/auth/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
