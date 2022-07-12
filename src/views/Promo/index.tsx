@@ -19,14 +19,8 @@ const rows = [
 
 const Promo = () => {
   return (
-    <div style={{ height: 400, width: '70vw' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      />
+    <div style={{ height: 400, width: '70vw', color: 'white' }}>
+      <DataGrid rows={rows} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
     </div>
   )
 }

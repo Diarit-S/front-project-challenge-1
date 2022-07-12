@@ -1,14 +1,15 @@
-import * as React from 'react'
+// import * as React from 'react'
 
-import { useAuth } from 'utils/hooks/auth'
-import { useLocation, Navigate } from 'react-router-dom'
+// import { useAuth } from 'utils/hooks/auth'
+// import { useLocation, Navigate } from 'react-router-dom'
 import { UserRole } from 'models/Auth'
 
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 
 export const RequireAuth = ({ role, children }: { role: UserRole; children: JSX.Element }) => {
-  const auth = useAuth()
-  const location = useLocation()
+  console.log(role)
+  // const auth = useAuth()
+  // const location = useLocation()
 
   // if (!auth.user) {
   //   return <Navigate to="/login" state={{ from: location }} replace />

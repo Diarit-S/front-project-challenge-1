@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 const Auth = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   const login = async (): Promise<void> => {
     try {
@@ -16,7 +16,7 @@ const Auth = () => {
         }
       })
       const responseData = await response.json()
-      const { status, statusCode, token, refreshToken } = responseData
+      const { token, refreshToken } = responseData
       localStorage.setItem('refreshToken', refreshToken)
       localStorage.setItem('toek', token)
       console.log(response)

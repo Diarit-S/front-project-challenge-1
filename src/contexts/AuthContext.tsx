@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { AuthContextType } from 'models/Auth'
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 export const AuthContext = React.createContext<AuthContextType>(null!)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
