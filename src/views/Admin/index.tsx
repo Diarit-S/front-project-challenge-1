@@ -7,13 +7,14 @@ const Admin = () => {
 
   const getChallenges = async (): Promise<void> => {
     const token = localStorage.getItem('token')
+    console.log(token)
     try {
       const response = await fetch('http://51.15.208.76:5050/challenges', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'auth-token': JSON.stringify(token)
+          'auth-token': token as string
         }
       })
       const responseData = await response.json()

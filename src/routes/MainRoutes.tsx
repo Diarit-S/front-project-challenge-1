@@ -14,6 +14,7 @@ const Register = Loadable(lazy(() => import('views/Register')))
 const Evaluation = Loadable(lazy(() => import('views/Evaluation')))
 const Admin = Loadable(lazy(() => import('views/Admin')))
 const Promo = Loadable(lazy(() => import('views/Promo')))
+const Challenge = Loadable(lazy(() => import('views/Challenge')))
 
 import { RequireAuth } from 'layouts/RequireAuth'
 
@@ -46,6 +47,10 @@ const MainRoutes = {
     {
       path: '/evaluation',
       element: <Evaluation />
+    },
+    {
+      path: '/challenge/:challengeId/:questionNumber',
+      element: <Challenge />
     },
     {
       path: '/promo/:promoId/:challengeId',
