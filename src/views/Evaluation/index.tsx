@@ -60,7 +60,7 @@ export default function Evaluation() {
         },
         body: JSON.stringify({ userEmail: email, ipAddress: endpoint })
       })
-      navigate('/challenge')
+      navigate('/challenge/1/1')
     } catch (error) {
       console.error(error)
     }
