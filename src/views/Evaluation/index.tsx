@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
 import Box from '@mui/material/Box'
@@ -9,6 +11,10 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { TextField } from '@mui/material'
+
+import { useNavigate } from 'react-router-dom'
+
+import JWT from 'jwt-decode'
 
 const steps = [
   {
@@ -30,12 +36,36 @@ const steps = [
     description: `Fournissez le endpoint de votre API`
   },
   {
-    label: 'Testez votre connexion',
+    label: 'Continuer',
     description: ``
   }
 ]
 
 export default function Evaluation() {
+  const token = localStorage.getItem('token')
+  const decryptedJwt = JWT(token as string) as { body: any }
+  const email = decryptedJwt.body.email
+  console.log(decryptedJwt)
+  const navigate = useNavigate()
+
+  const createInstanceForUser = async (): Promise<void> => {
+    console.log(token)
+    try {
+      const response = await fetch('http://51.15.208.76:5050/instance', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'auth-token': token as string
+        },
+        body: JSON.stringify({ userEmail: email, ipAddress: endpoint })
+      })
+      navigate('/challenge')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const [activeStep, setActiveStep] = React.useState(0)
 
   const [lastName, setLastName] = React.useState('')
@@ -52,24 +82,6 @@ export default function Evaluation() {
 
   const handleReset = () => {
     setActiveStep(0)
-  }
-
-  const testEndpointConnexion = async () => {
-    try {
-      const response = await fetch('http://51.15.208.76:5050/user/testEndpoint', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'auth-token': ` ${localStorage.get('token')}`
-        },
-        body: { endpoint } as unknown as BodyInit
-      })
-      const responseData = await response.json()
-      console.log(responseData)
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   return (
@@ -114,22 +126,24 @@ export default function Evaluation() {
 
               {index === 3 && (
                 <Box>
-                  <Button variant="contained" onClick={testEndpointConnexion}>
-                    Testez !
+                  <Button variant="contained" onClick={createInstanceForUser}>
+                    Continuer
                   </Button>
                 </Box>
               )}
 
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
-                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                  </Button>
-                  <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
+              {index !== 3 && (
+                <Box sx={{ mb: 2 }}>
+                  <div>
+                    <Button variant="contained" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
+                      Continuer
+                    </Button>
+                    {/* <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
                     Back
-                  </Button>
-                </div>
-              </Box>
+                  </Button> */}
+                  </div>
+                </Box>
+              )}
             </StepContent>
           </Step>
         ))}
