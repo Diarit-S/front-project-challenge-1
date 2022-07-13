@@ -9,6 +9,10 @@ const columns: GridColDef[] = [
     field: 'Note',
     headerName: 'Note',
     type: 'number'
+  },
+  {
+    field: 'promotion',
+    headerName: 'Promo'
   }
 ]
 
